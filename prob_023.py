@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 # ============================================================================
 import sys
 import math
@@ -16,8 +16,8 @@ import primes
 
 # ----------------------------------------------------------------------------
 def sumOfDivisors(num, primes_list):
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  if num == 0 or num == 1: 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if num == 0 or num == 1:
     return 0
 
   prime_factors = collections.Counter(primes.getPrimeFactors(num, primes_list))
@@ -28,23 +28,23 @@ def sumOfDivisors(num, primes_list):
     for i in xrange(prime_factors[pf]+1):
       temp += pf**i
     sum_of_divisors *= temp
-  
+
   return sum_of_divisors - num
 
 
 # ----------------------------------------------------------------------------
 def getListOfAbundantNumbers(min = -1, max = -1):
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if min < 0: min = 0
   # this number is chosen based on the problem statement
   if max < 0: max = 28125
-  
+
   list_of_primes = primes.primeSeive(max)
   abundant_nums = []
 
   for i in xrange(min, max+1):
     # if abundant number
-    if sumOfDivisors(i, list_of_primes) > i: 
+    if sumOfDivisors(i, list_of_primes) > i:
       # print '------------------------------------'
       # print '%d is an abundant number' % i
       # print '\tprime divisors: %s' % primes.getPrimeFactors(i, list_of_primes)
@@ -55,7 +55,7 @@ def getListOfAbundantNumbers(min = -1, max = -1):
 
 # ----------------------------------------------------------------------------
 def findNumsNotMadeFromPairsInList(list, upper_limit):
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # print list
   # from_list = [True]*(list[-1]+list[-2]+1)
   from_list = [True]*(upper_limit+1)
@@ -76,13 +76,13 @@ def findNumsNotMadeFromPairsInList(list, upper_limit):
 
 # ----------------------------------------------------------------------------
 def sumOfNumsNotFromAbundantNums(min = -1, max = -1):
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if min < 0:   min = 0
   if max < min: max = 28123
   abundant_nums = getListOfAbundantNumbers(min, max)
   nums_not_from_abundant_pair = findNumsNotMadeFromPairsInList(abundant_nums, max)
   sum = reduce(operator.add, nums_not_from_abundant_pair)
-  
+
   # print 'list of abundant_nums: %s' % abundant_nums
   # print 'nums not from abundant pair: %s' % nums_not_from_abundant_pair
   print 'The sum of abundant numbers is %d' % sum
@@ -90,7 +90,7 @@ def sumOfNumsNotFromAbundantNums(min = -1, max = -1):
 
 # ============================================================================
 def main():
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   sumOfNumsNotFromAbundantNums(-1, 20)
   print '====================================================================='
   sumOfNumsNotFromAbundantNums(-1, 50)
