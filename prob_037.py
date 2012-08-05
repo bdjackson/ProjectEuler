@@ -84,5 +84,3 @@ if __name__ == "__main__":
 # found 11 truncatable primes
 # [23, 37, 53, 73, 313, 317, 373, 797, 3137, 3797, 739397]
 # sum of truncatable primes: 748317
-
-
