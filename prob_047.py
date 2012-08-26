@@ -51,3 +51,16 @@ if __name__ == "__main__":
 # ============
 # = solution =
 # ============
+# Generating primes from 2-10000
+# Primes successfully generated
+# [14, 15]
+# Generating primes from 2-100000
+# Primes successfully generated
+# [644, 645, 646]
+# Generating primes from 2-1000000
+# Primes successfully generated
+# [134043, 134044, 134045, 134046]
+#
+# real	0m34.028s
+# user	0m33.834s
+# sys	0m0.099s

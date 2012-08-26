@@ -25,6 +25,21 @@ import primes_pp
 # =============================================================================
 
 # -----------------------------------------------------------------------------
+def flatten(l, level = 0):
+    """
+    takes a list of lists, and flattens into a single list
+    """
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    flat_l = []
+    if isinstance(l, list):
+        for e in l:
+            flat_l += flatten(e)
+    else:
+        flat_l = [l]
+
+    return flat_l
+
+# -----------------------------------------------------------------------------
 def genMultiplesList(mult):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     start = 012
@@ -39,9 +54,40 @@ def genMultiplesList(mult):
     return list
 
 # -----------------------------------------------------------------------------
-def findSpecialPandigitals():
+def constructSpecialNumbers(dicts, seed = ''):
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if len(dicts) == 0: return seed
+
+    special_nums = []
+    for d in dicts[0]:
+        if seed == '':
+            special_nums.append( constructSpecialNumbers( dicts[1:]
+                                                        , d
+                                                        )
+                               )
+        if seed[-2:] == d[:2]:
+            special_nums.append( constructSpecialNumbers( dicts[1:]
+                                                        , '%s%s' % (seed, d[-1])
+                                                        )
+                               )
+
+    return flatten(special_nums)
+
+# -----------------------------------------------------------------------------
+def pruneNonPandigitals(special_nums):
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    special_pandigitals = []
+    ref = set('0123456789')
+    for sn in special_nums:
+        if set(sn) == ref:
+            special_pandigitals.append(int(sn))
+    return special_pandigitals
+
+# -----------------------------------------------------------------------------
+def findSpecialPandigitals():
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     dicts = []
+    dicts.append(genMultiplesList(1))
     dicts.append(genMultiplesList(2))
     dicts.append(genMultiplesList(3))
     dicts.append(genMultiplesList(5))
@@ -50,9 +96,13 @@ def findSpecialPandigitals():
     dicts.append(genMultiplesList(13))
     dicts.append(genMultiplesList(17))
 
-    for d in dicts:
-        print '----------------------'
-        print d
+    special_nums = constructSpecialNumbers(dicts)
+    special_pandigitals = pruneNonPandigitals(special_nums)
+    print 'The list of special pandigitals is:'
+    print '\t%s' % special_pandigitals
+    print 'The sum of these numbers is: %d' % reduce( operator.add
+                                                    , special_pandigitals
+                                                    )
 
 # =============================================================================
 def main():
@@ -68,3 +118,11 @@ if __name__ == "__main__":
 # ============
 # = solution =
 # ============
+# The list of special pandigitals is:
+# 	[1406357289, 1430952867, 1460357289, 4106357289, 4130952867, 4160357289]
+# The sum of these numbers is: 16695334890
+#
+# real	0m1.701s
+# user	0m1.679s
+# sys	0m0.019s
+
