@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# ============================================================================
+# =============================================================================
 import math
 import collections
 import operator
@@ -12,6 +12,7 @@ class primeSeive(object):
         # self.prime_seive = [True]*(int(upper_bound)+1)
         # self.prime_seive = [False,True]*(int(upper_bound/2)+2)
         self.prime_seive = []
+        self.prime_list = None
         self.performSeive()
 
     # -------------------------------------------------------------------------
@@ -49,25 +50,50 @@ class primeSeive(object):
 
         return self.prime_seive[candidate]
 
-# ----------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
+    def getPrimeList(self):
+        if self.prime_list == None:
+            self.prime_list = []
+            for cand in xrange(self.upper_bound):
+                if self.isPrime(cand):
+                    self.prime_list.append(cand)
+        return self.prime_list
+
+# -----------------------------------------------------------------------------
 def isPrime(num):
-  """
-  Is this number prime?
-  """
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Special case for 0, 1
-  if num == 0 or num == 1:
-    return False
+    """
+    Is this number prime?
+    """
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # Special case for 0, 1
+    if num == 0 or num == 1:
+        return False
 
-  # variables used in checking for primes
-  is_prime = True
-  max_possible = int(math.sqrt(num)+1)
-  test = 2
+    # variables used in checking for primes
+    is_prime = True
+    max_possible = int(math.sqrt(num)+1)
+    test = 2
 
-  # check if num is factorable
-  while test < max_possible and is_prime:
-    if num % test == 0:
-      is_prime = False
-    test += 1
-  return is_prime
+    # check if num is factorable
+    while test < max_possible and is_prime:
+        if num % test == 0:
+            is_prime = False
+        test += 1
+    return is_prime
 
+# -----------------------------------------------------------------------------
+def getPrimeFactors(num, prime_seive):
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    if num == 0 or num == 1:
+        return []
+
+    primes_list = prime_seive.getPrimeList()
+    prime_factors = []
+    test_num = num
+    for p in primes_list:
+        while test_num % p == 0:
+            prime_factors.append(p)
+            test_num /= p
+        if test_num == 1:
+            break
+    return prime_factors
