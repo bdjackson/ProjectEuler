@@ -17,12 +17,17 @@ import primes_pp
 
 # ------------------------------------------------------------------------------
 def getLongestSum(num, prime_list):
+    head_it = 0
     tail_it = 0
+    head = prime_list[0]
     running_sum = 0
     running_sum_length = 0
     longest_sum_length = 0
 
-    for head in prime_list:
+    while head < num/2 and tail_it < 5:
+        head = prime_list[head_it]
+        head_it += 1
+
         running_sum += head
         running_sum_length += 1
 
@@ -33,8 +38,6 @@ def getLongestSum(num, prime_list):
         if running_sum == num:
             longest_sum_length = running_sum_length
             break
-            # if running_sum_length > longest_sum_length:
-            # if running_sum_length < longest_sum_length:
 
     return longest_sum_length
 
@@ -63,6 +66,10 @@ def findLongestSum(terminal = 100):
 
 # ==============================================================================
 def main():
+    # findLongestSum(10**2)
+    # findLongestSum(10**3)
+    # findLongestSum(10**4)
+    # findLongestSum(10**5)
     findLongestSum(10**6)
 
 # ==============================================================================
@@ -73,3 +80,9 @@ if __name__ == "__main__":
 # ============
 # = solution =
 # ============
+# prime below 1000000 with longest sum: 997651
+# sum length: 543
+#
+# real	0m19.736s
+# user	0m19.677s
+# sys	0m0.041s
